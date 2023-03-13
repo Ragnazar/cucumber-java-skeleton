@@ -1,11 +1,33 @@
 package io.cucumber.skeleton;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StepDefinitions {
-    @Given("I have {int} cukes in my belly")
-    public void I_have_cukes_in_my_belly(int cukes) {
-        Belly belly = new Belly();
-        belly.eat(cukes);
+    private Person lucy;
+    private Person sean;
+    private String messageFromSean;
+
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_sean(Integer distance) {
+        lucy = new Person();
+        sean = new Person();
+        lucy.moveTo(distance);
     }
+
+    @When("Sean shouts {string}")
+    public void sean_shouts(String message) {
+        sean.shout(message);
+        messageFromSean = message;
+    }
+
+    @Then("Lucy heard Sean's message")
+    public void lucy_heard_sean_s_message() {
+        assertEquals(asList(messageFromSean), lucy.getMessageHeard(messageFromSean));
+    }
+
 }
